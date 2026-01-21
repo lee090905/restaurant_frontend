@@ -1,0 +1,276 @@
+/* MobilePOS.css */
+:root {
+  --m-primary: #2563eb;
+  --m-success: #22c55e;
+  --m-bg: #f3f4f6;
+  --m-white: #ffffff;
+  --m-text: #1f2937;
+  --m-gray: #9ca3af;
+  --m-border: #e5e7eb;
+}
+
+body {
+  margin: 0;
+  background-color: var(--m-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent; /* Tắt highlight xanh khi tap trên iOS */
+}
+
+.m-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Header --- */
+.m-header {
+  background: var(--m-white);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+.m-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--m-primary);
+}
+.m-user {
+  font-size: 13px;
+  color: #666;
+  background: #f0f9ff;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* --- Area Filter --- */
+.m-area-scroll {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  background: var(--m-bg);
+  white-space: nowrap;
+}
+.m-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--m-border);
+  background: var(--m-white);
+  color: #666;
+  transition: all 0.2s;
+}
+.m-chip.active {
+  background: var(--m-primary);
+  color: var(--m-white);
+  border-color: var(--m-primary);
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+}
+
+/* --- Table Grid --- */
+.m-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  padding-bottom: 80px; /* Chừa chỗ cho Bottom Bar */
+}
+
+/* --- Menu View --- */
+.m-menu-header {
+  position: sticky;
+  top: 0;
+  background: var(--m-white);
+  z-index: 5;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--m-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-back {
+  background: none;
+  border: none;
+  font-size: 20px;
+  padding: 5px;
+  color: #666;
+}
+
+.m-category-bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+.cat-pill {
+  font-size: 13px;
+  padding: 6px 12px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  color: #666;
+  white-space: nowrap;
+}
+.cat-pill.active {
+  background: #e0f2fe;
+  color: var(--m-primary);
+  font-weight: 600;
+}
+
+.m-dish-list {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.m-dish-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--m-white);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.m-dish-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+}
+.m-dish-price {
+  color: var(--m-primary);
+  font-weight: 600;
+}
+
+.btn-add {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: var(--m-primary);
+  border: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Floating Cart Bar --- */
+.m-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--m-white);
+  padding: 16px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 20;
+}
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+}
+.cart-count {
+  font-size: 12px;
+  color: #666;
+}
+.cart-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--m-text);
+}
+.btn-view-cart {
+  background: var(--m-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* --- Modal/Drawer --- */
+.m-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end; /* Bottom sheet effect */
+}
+.m-drawer {
+  background: white;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+}
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.drawer-items {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 8px;
+}
+.btn-qty {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: white;
+  border-radius: 6px;
+  font-weight: bold;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-confirm {
+  width: 100%;
+  background: var(--m-success);
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
