@@ -61,7 +61,10 @@ export default function POSPage() {
   const [activeArea, setActiveArea] = useState<number>(1);
   const [showShift, setShowShift] = useState(false);
 
-  const calcTotal = (items: any[]) => items.reduce((s, i) => s + i.price * i.quantity, 0);
+  const calcTotal = (items: any[]) => items.reduce((s, i) => {
+    if (i.status === 'cancelled') return s;
+    return s + i.price * i.quantity;
+  }, 0);
   const total = calcTotal(confirmedItems);
 
   const categories = Array.from(new Set(dishes.map((d) => d.category).filter(Boolean)));
@@ -185,7 +188,7 @@ export default function POSPage() {
           tableId={selectedTableId || 'N/A'}
           orderId={orderId}
           cashier={sessionStorage.getItem('username') || 'N/A'}
-          items={invoiceItems}
+          items={invoiceItems.filter(i => i.status !== 'cancelled')}
           total={total}
         />
       </div>
@@ -378,7 +381,7 @@ export default function POSPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {invoiceItems.map((i) => (
+                  {invoiceItems.filter(i => i.status !== 'cancelled').map((i) => (
                     <tr key={i.dish_id}>
                       <td>{i.name} {i.note && <div style={{ fontSize: 11, color: '#888' }}>({i.note})</div>}</td>
                       <td align="center">{i.quantity}</td>

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   createReservation,
   CreateReservationDTO,
 } from '../api/reservation.api';
+import { getTables, TableDTO } from '../api/table.api';
+import { MenuModal } from '../components/MenuModal';
 import './ReservationPage.css';
 
 // Regex số điện thoại Việt Nam (đầu 03, 05, 07, 08, 09)
@@ -20,7 +22,7 @@ export default function ReservationPage() {
   const [form, setForm] = useState<CreateReservationDTO>({
     customer_name: '',
     phone: '',
-    table_id: 0, // undefined để placeholder hiện lên
+    table_id: 0,
     time_from: '',
     guest_count: 2,
     note: '',
@@ -29,6 +31,21 @@ export default function ReservationPage() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Danh sách bàn từ API
+  const [tables, setTables] = useState<TableDTO[]>([]);
+  const [loadingTables, setLoadingTables] = useState(true);
+
+  // State cho Menu Modal
+  const [showMenu, setShowMenu] = useState(false);
+
+  // --- LOAD TABLES ---
+  useEffect(() => {
+    getTables()
+      .then((data) => setTables(data))
+      .catch((err) => console.error('Lỗi tải danh sách bàn:', err))
+      .finally(() => setLoadingTables(false));
+  }, []);
 
   // --- HANDLERS ---
   const handleChange = (field: keyof CreateReservationDTO, value: any) => {
@@ -83,7 +100,7 @@ export default function ReservationPage() {
     try {
       await createReservation({
         ...form,
-        table_id: form.table_id || 0, // Xử lý nếu backend cần số 0 thay vì null
+        table_id: form.table_id || 0,
       });
       setIsSuccess(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -208,16 +225,27 @@ export default function ReservationPage() {
           </div>
         </div>
 
-        {/* Hàng 3: Chọn bàn & Ghi chú */}
+        {/* Hàng 3: Chọn bàn (Dropdown) & Ghi chú */}
         <div className="form-group" style={{ marginBottom: 20 }}>
           <label className="form-label">Chọn bàn (Không bắt buộc)</label>
-          <input
-            type="number"
-            className="form-control"
-            placeholder="Nhập số bàn mong muốn (nếu biết)"
-            value={form.table_id || ''}
+          <select
+            className="form-control form-select"
+            value={form.table_id}
             onChange={(e) => handleChange('table_id', Number(e.target.value))}
-          />
+            disabled={loadingTables}
+          >
+            <option value={0}>
+              {loadingTables
+                ? '⏳ Đang tải danh sách bàn...'
+                : '— Để nhà hàng sắp xếp —'}
+            </option>
+            {tables.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name} — Khu vực {t.area}{' '}
+                {t.status === 'open' ? '(🟢 Trống)' : '(🔴 Đang sử dụng)'}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group" style={{ marginBottom: 20 }}>
@@ -234,9 +262,7 @@ export default function ReservationPage() {
         <div className="form-actions">
           <button
             className="btn btn-outline"
-            onClick={() =>
-              alert('Chức năng hiển thị Menu Modal sẽ được tích hợp tại đây!')
-            }
+            onClick={() => setShowMenu(true)}
           >
             📖 Xem Menu
           </button>
@@ -250,6 +276,9 @@ export default function ReservationPage() {
           </button>
         </div>
       </div>
+
+      {/* Menu Modal */}
+      {showMenu && <MenuModal onClose={() => setShowMenu(false)} />}
     </div>
   );
 }

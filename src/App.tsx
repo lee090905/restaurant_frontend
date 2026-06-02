@@ -16,6 +16,7 @@ import DishesAdmin from './pages/admin/DishesAdmin';
 import OrdersAdmin from './pages/admin/OrdersAdmin';
 import ShiftsAdmin from './pages/admin/ShiftsAdmin';
 import UsersAdmin from './pages/admin/UsersAdmin';
+import QrConfigPage from './pages/admin/QrConfigPage';
 import { PrivateRoute } from './routes/PrivateRoute';
 
 export default function App() {
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="orders" element={<OrdersAdmin />} />
         <Route path="shifts" element={<ShiftsAdmin />} />
         <Route path="users" element={<UsersAdmin />} />
+        <Route path="qr-config" element={<QrConfigPage />} />
       </Route>
     </Routes>
   );

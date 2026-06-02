@@ -28,11 +28,10 @@ export function PaymentQRCode({ amount, orderId }: PaymentQRCodeProps) {
     <div style={{ textAlign: 'center', padding: '20px', background: '#fff', borderRadius: '8px' }}>
       <h4 style={{ marginBottom: '16px', color: '#333' }}>Quét mã để thanh toán</h4>
       <div style={{ padding: '16px', background: '#f8f9fa', display: 'inline-block', borderRadius: '12px' }}>
-        <QRCodeSVG 
-          value={qrUrl} 
-          size={200}
-          level={"H"}
-          includeMargin={true}
+        <img 
+          src={qrUrl} 
+          alt="Mã QR Thanh toán VietQR" 
+          style={{ width: '220px', height: '220px', objectFit: 'contain' }}
         />
       </div>
       <div style={{ marginTop: '16px', fontSize: '14px', color: '#555' }}>

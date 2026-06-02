@@ -68,7 +68,10 @@ export default function MobilePOSPage() {
   );
 
   const confirmedTotal = confirmedItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => {
+      if (item.status === 'cancelled') return sum;
+      return sum + item.price * item.quantity;
+    },
     0,
   );
 
@@ -112,6 +115,7 @@ export default function MobilePOSPage() {
     const map = new Map<string, any>();
 
     for (const item of items) {
+      if (item.status === 'cancelled') continue;
       // Tạo key dựa trên ID món và Ghi chú
       const key = `${item.dish_id}_${item.note || ''}`;
 
@@ -632,7 +636,10 @@ export default function MobilePOSPage() {
                     >
                       {formatMoney(
                         confirmedItems.reduce(
-                          (s, i) => s + i.price * i.quantity,
+                          (s, i) => {
+                            if (i.status === 'cancelled') return s;
+                            return s + i.price * i.quantity;
+                          },
                           0,
                         ),
                       )}
