@@ -29,11 +29,11 @@ export default function LoginPage({
       const token = res.data.token;
       const user = res.data.user;
 
-      // Lưu thông tin vào localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('userId', user.id.toString());
-      localStorage.setItem('username', user.username);
+      // Lưu thông tin vào sessionStorage
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('userId', user.id.toString());
+      sessionStorage.setItem('username', user.username);
 
       onLoginSuccess(token);
 

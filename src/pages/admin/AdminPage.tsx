@@ -17,9 +17,9 @@ export default function AdminPage() {
   const [cancelRequests, setCancelRequests] = useState<any[]>([]);
 
   useEffect(() => {
-    // Polling hoặc lắng nghe sự kiện localStorage để cập nhật realtime (giả lập)
+    // Polling hoặc lắng nghe sự kiện sessionStorage để cập nhật realtime (giả lập)
     const checkRequests = () => {
-      const data = localStorage.getItem('cancelRequests');
+      const data = sessionStorage.getItem('cancelRequests');
       if (data) {
         setCancelRequests(JSON.parse(data));
       }
@@ -32,7 +32,7 @@ export default function AdminPage() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     window.location.href = '/login';
   };
 
@@ -45,7 +45,7 @@ export default function AdminPage() {
   // Xử lý logic Modal
   const removeRequest = (index: number) => {
     const next = cancelRequests.filter((_, i) => i !== index);
-    localStorage.setItem('cancelRequests', JSON.stringify(next));
+    sessionStorage.setItem('cancelRequests', JSON.stringify(next));
     setCancelRequests(next);
   };
 
@@ -73,7 +73,7 @@ export default function AdminPage() {
         <header className="top-header">
           <div className="admin-user">
             <span style={{ fontSize: 20 }}>👤</span>
-            <span>{localStorage.getItem('username') || 'Admin'}</span>
+            <span>{sessionStorage.getItem('username') || 'Admin'}</span>
           </div>
           <button onClick={handleLogout} className="btn-logout">
             Đăng xuất
@@ -95,7 +95,7 @@ export default function AdminPage() {
               </h3>
               <button
                 onClick={() => {
-                  localStorage.removeItem('cancelRequests');
+                  sessionStorage.removeItem('cancelRequests');
                   setCancelRequests([]);
                 }}
                 style={{

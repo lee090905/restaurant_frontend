@@ -16,10 +16,11 @@ import DishesAdmin from './pages/admin/DishesAdmin';
 import OrdersAdmin from './pages/admin/OrdersAdmin';
 import ShiftsAdmin from './pages/admin/ShiftsAdmin';
 import UsersAdmin from './pages/admin/UsersAdmin';
+import { PrivateRoute } from './routes/PrivateRoute';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(
-    localStorage.getItem('token'),
+    sessionStorage.getItem('token'),
   );
 
   return (
@@ -31,10 +32,24 @@ export default function App() {
       <Route path="/reservation" element={<ReservationPage />} />
 
       {/* 3. Trang POS (Máy tính) */}
-      <Route path="/" element={<POSPage />} />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <POSPage />
+          </PrivateRoute>
+        }
+      />
 
       {/* 4. Trang POS (Mobile) */}
-      <Route path="/mobile" element={<MobilePOSPage />} />
+      <Route
+        path="/mobile"
+        element={
+          <PrivateRoute>
+            <MobilePOSPage />
+          </PrivateRoute>
+        }
+      />
 
       {/* 5. Khu vực Admin (Cần quyền Admin) */}
       <Route

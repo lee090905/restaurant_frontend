@@ -178,7 +178,7 @@ export default function MobilePOSPage() {
   // --- 4. LOGIC GỬI BẾP (FULL API) ---
   const handlePlaceOrder = async () => {
     if (draftItems.length === 0) return;
-    const userId = localStorage.getItem('userId');
+    const userId = sessionStorage.getItem('userId');
     if (!userId) {
       alert('Bạn chưa đăng nhập/chấm công!');
       return;
@@ -278,7 +278,7 @@ export default function MobilePOSPage() {
             : `Bàn: ${selectedTable?.name}`}
         </div>
         <div className="m-user">
-          {localStorage.getItem('username') || 'Staff'}
+          {sessionStorage.getItem('username') || 'Staff'}
         </div>
       </div>
 
